@@ -1,3 +1,229 @@
+:root {
+  /* Base variables */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-2xl: 48px;
+  --spacing-3xl: 64px;
+  
+  /* Transitions */
+  --transition-fast: 0.2s ease;
+  --transition-base: 0.3s ease;
+  
+  /* Default theme (will be overridden) */
+  --primary: #080808;
+  --secondary: #111;
+  --text: #e5e5e5;
+  --text-dim: #555;
+  --text-dimmer: #333;
+  --accent: #4ade80;
+  --accent-secondary: #facc15;
+  --border: #141414;
+  --card-bg: #0a0a0a;
+  --font-primary: var(--font-dm-sans), 'Helvetica Neue', sans-serif;
+  --font-mono: var(--font-jetbrains), 'JetBrains Mono', 'Fira Code', monospace;
+  --blur-amount: blur(0);
+}
+
+/* Neo-Minimal Theme (Default) */
+.theme-neo-minimal {
+  --primary: #080808;
+  --secondary: #111;
+  --text: #e5e5e5;
+  --text-dim: #555;
+  --text-dimmer: #333;
+  --accent: #4ade80;
+  --accent-secondary: #facc15;
+  --border: #141414;
+  --card-bg: #0a0a0a;
+  --font-primary: var(--font-dm-sans), 'Helvetica Neue', sans-serif;
+  --font-mono: var(--font-jetbrains), 'JetBrains Mono', monospace;
+}
+
+.theme-neo-minimal .hero-title {
+  font-family: var(--font-mono);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+}
+
+/* Cyberpunk Theme */
+.theme-cyberpunk {
+  --primary: #0b0f1c;
+  --secondary: #1a1f35;
+  --text: #e0f2fe;
+  --text-dim: #7b8cde;
+  --text-dimmer: #3a4a7a;
+  --accent: #ff0a6c;
+  --accent-secondary: #0af0ff;
+  --border: #2a3170;
+  --card-bg: #12172f;
+  --font-primary: var(--font-inter), 'Inter', sans-serif;
+  --font-mono: var(--font-fira), 'Fira Code', monospace;
+}
+
+.theme-cyberpunk .hero-title {
+  font-family: var(--font-inter);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  text-shadow: 0 0 10px #ff0a6c40;
+}
+
+.theme-cyberpunk .grid {
+  border-color: #ff0a6c20;
+  box-shadow: 0 0 20px #0af0ff20;
+}
+
+.theme-cyberpunk .eyebrow-dot {
+  background: #ff0a6c;
+  animation: neonPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes neonPulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 10px #ff0a6c; }
+  50% { opacity: 0.5; box-shadow: 0 0 20px #ff0a6c; }
+}
+
+/* Warm Industrial Theme */
+.theme-warm-industrial {
+  --primary: #1a1c1a;
+  --secondary: #2a2c28;
+  --text: #e8e6e0;
+  --text-dim: #9a8c7a;
+  --text-dimmer: #5a5548;
+  --accent: #fbbf24;
+  --accent-secondary: #d97706;
+  --border: #3a3530;
+  --card-bg: #242520;
+  --font-primary: var(--font-playfair), 'Playfair Display', serif;
+  --font-mono: var(--font-jetbrains), 'IBM Plex Mono', monospace;
+}
+
+.theme-warm-industrial .hero-title {
+  font-family: var(--font-playfair);
+  font-weight: 500;
+  line-height: 1.1;
+  color: #fbbf24;
+}
+
+.theme-warm-industrial .hero-title-dim {
+  color: #9a8c7a;
+}
+
+.theme-warm-industrial .hero-sub {
+  font-family: var(--font-inter);
+  font-weight: 300;
+  font-size: 18px;
+}
+
+.theme-warm-industrial .nav-links a {
+  font-family: var(--font-inter);
+  font-weight: 400;
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+}
+
+/* Glassmorphic Theme */
+.theme-glassmorphic {
+  --primary: #f8fafc;
+  --secondary: #f1f5f9;
+  --text: #0f172a;
+  --text-dim: #475569;
+  --text-dimmer: #94a3b8;
+  --accent: #2563eb;
+  --accent-secondary: #7c3aed;
+  --border: #e2e8f0;
+  --card-bg: rgba(255, 255, 255, 0.4);
+  --font-primary: var(--font-inter), 'Cal Sans', sans-serif;
+  --font-mono: var(--font-jetbrains), 'SF Mono', monospace;
+  --blur-amount: blur(12px);
+}
+
+.theme-glassmorphic main {
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+}
+
+.theme-glassmorphic nav {
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: var(--blur-amount);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.theme-glassmorphic .hero-title {
+  font-family: var(--font-inter);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  color: #0f172a;
+}
+
+.theme-glassmorphic .hero-title-dim {
+  color: #94a3b8;
+}
+
+.theme-glassmorphic .grid-item {
+  backdrop-filter: var(--blur-amount);
+  background: var(--card-bg);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 12px;
+}
+
+.theme-glassmorphic .stat-num {
+  color: #0f172a;
+}
+
+/* Tech Noir Theme */
+.theme-tech-noir {
+  --primary: #000000;
+  --secondary: #0a0a0a;
+  --text: #ffffff;
+  --text-dim: #808080;
+  --text-dimmer: #404040;
+  --accent: #ff0000;
+  --accent-secondary: #00ff00;
+  --border: #1f1f1f;
+  --card-bg: #050505;
+  --font-primary: 'Arial', 'Helvetica', sans-serif;
+  --font-mono: 'Courier New', var(--font-jetbrains), monospace;
+}
+
+.theme-tech-noir .hero-title {
+  font-family: 'Monument Extended', 'Arial Black', sans-serif;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  color: #ff0000;
+  text-shadow: 2px 2px 0 #00ff00;
+}
+
+.theme-tech-noir .hero-title-dim {
+  color: #404040;
+  text-shadow: none;
+}
+
+.theme-tech-noir .hero-eyebrow {
+  font-family: 'Courier New', monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: #00ff00;
+}
+
+.theme-tech-noir .grid {
+  border: 1px solid #ff0000;
+}
+
+.theme-tech-noir .grid-item {
+  border: 1px solid #00ff00;
+  margin: -1px;
+}
+
+.theme-tech-noir .eyebrow-dot {
+  background: #ff0000;
+  box-shadow: 0 0 10px #ff0000;
+}
+
+/* Base Styles */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -9,11 +235,12 @@ html {
 }
 
 body {
-  background: #080808;
-  color: #e5e5e5;
-  font-family: var(--font-dm-sans), 'Helvetica Neue', sans-serif;
+  background: var(--primary);
+  color: var(--text);
+  font-family: var(--font-primary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background-color var(--transition-base), color var(--transition-base);
 }
 
 a {
@@ -22,17 +249,23 @@ a {
 }
 
 ::selection {
-  background: #ffffff15;
-  color: #fff;
+  background: var(--accent);
+  color: var(--primary);
 }
 
 ::-webkit-scrollbar {
   width: 6px;
 }
+
 ::-webkit-scrollbar-track {
-  background: #080808;
+  background: var(--primary);
 }
+
 ::-webkit-scrollbar-thumb {
-  background: #222;
+  background: var(--text-dimmer);
   border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
 }

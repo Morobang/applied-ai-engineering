@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
-import { DM_Sans, JetBrains_Mono } from 'next/font/google'
+import { DM_Sans, JetBrains_Mono, Inter, Fira_Code, Playfair_Display } from 'next/font/google'
+import { ThemeProvider } from '@/context/ThemeContext'
 import './globals.css'
 
 const dmSans = DM_Sans({
@@ -10,7 +11,25 @@ const dmSans = DM_Sans({
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ['latin'],
-  variable: '--font-mono',
+  variable: '--font-jetbrains',
+  display: 'swap',
+})
+
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
+  display: 'swap',
+})
+
+const firaCode = Fira_Code({
+  subsets: ['latin'],
+  variable: '--font-fira',
+  display: 'swap',
+})
+
+const playfair = Playfair_Display({
+  subsets: ['latin'],
+  variable: '--font-playfair',
   display: 'swap',
 })
 
@@ -30,8 +49,15 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${dmSans.variable} ${jetbrainsMono.variable}`}>
-      <body>{children}</body>
+    <html 
+      lang="en" 
+      className={`${dmSans.variable} ${jetbrainsMono.variable} ${inter.variable} ${firaCode.variable} ${playfair.variable}`}
+    >
+      <body>
+        <ThemeProvider>
+          {children}
+        </ThemeProvider>
+      </body>
     </html>
   )
 }

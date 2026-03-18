@@ -1,195 +1,169 @@
 'use client'
 
-import Link from 'next/link'
-import { Project, levelColors } from '@/lib/projects'
-
-const statusConfig = {
-  live: { label: 'Live', color: '#4ade80' },
-  building: { label: 'Building', color: '#facc15' },
-  planned: { label: 'Planned', color: '#6b7280' },
-}
-
-const demoIcons: Record<Project['demoType'], string> = {
-  upload: '↑',
-  webcam: '◉',
-  simulate: '▶',
-  text: '✦',
-}
+import { type Project, levelColors } from '@/lib/projects'
 
 export default function ProjectCard({ project }: { project: Project }) {
-  const status = statusConfig[project.status]
-  const levelColor = levelColors[project.level]
+  const statusColors = {
+    live: '#4ade80',
+    building: '#facc15',
+    planned: '#94a3b8'
+  }
 
   return (
-    <Link href={`/projects/${project.slug}`} className="group block">
-      <div className="project-card">
-        <div className="card-header">
-          <span className="project-number">{project.number}</span>
-          <div className="card-meta">
-            <span className="demo-type" title={`Demo: ${project.demoType}`}>
-              {demoIcons[project.demoType]}
-            </span>
-            <span
-              className="status-dot"
-              style={{ background: status.color }}
-              title={status.label}
-            />
-          </div>
-        </div>
+    <div className="project-card">
+      <div className="card-header">
+        <span className="project-number">{project.number}</span>
+        <span 
+          className="level-badge"
+          style={{ background: levelColors[project.level], color: '#000' }}
+        >
+          {project.level}
+        </span>
+      </div>
+      
+      <h3 className="project-title">{project.title}</h3>
+      <p className="project-description">{project.description}</p>
+      
+      <div className="project-tags">
+        {project.tags.slice(0, 3).map(tag => (
+          <span key={tag} className="tag">#{tag}</span>
+        ))}
+        {project.tags.length > 3 && (
+          <span className="tag">+{project.tags.length - 3}</span>
+        )}
+      </div>
 
-        <div className="card-body">
-          <h3 className="project-title">{project.title}</h3>
-          <p className="project-desc">{project.description}</p>
-        </div>
-
-        <div className="card-footer">
-          <span className="level-tag" style={{ color: levelColor, borderColor: levelColor + '33' }}>
-            {project.level}
-          </span>
-          <div className="tags">
-            {project.tags.slice(0, 3).map(tag => (
-              <span key={tag} className="tag">{tag}</span>
-            ))}
-          </div>
-        </div>
-
-        <div className="card-arrow">→</div>
+      <div className="card-footer">
+        <span className="demo-badge">
+          {project.demoType === 'webcam' && '📷'}
+          {project.demoType === 'upload' && '📤'}
+          {project.demoType === 'simulate' && '🎮'}
+          {project.demoType === 'text' && '📝'}
+          {' '}{project.demoType}
+        </span>
+        <a href={`/projects/${project.slug}`} className="project-link">
+          View →
+        </a>
       </div>
 
       <style jsx>{`
         .project-card {
-          position: relative;
-          background: #0d0d0d;
-          border: 1px solid #1f1f1f;
-          border-radius: 2px;
           padding: 24px;
+          background: var(--card-bg);
           height: 100%;
           display: flex;
           flex-direction: column;
-          gap: 16px;
-          transition: border-color 0.2s ease, background 0.2s ease;
-          cursor: pointer;
-          overflow: hidden;
+          transition: all var(--transition-base);
+          border: 1px solid transparent;
+          position: relative;
         }
-        .project-card::before {
-          content: '';
-          position: absolute;
-          top: 0; left: 0; right: 0;
-          height: 1px;
-          background: linear-gradient(90deg, transparent, #ffffff22, transparent);
-          opacity: 0;
-          transition: opacity 0.3s ease;
+        
+        .project-card:hover {
+          border-color: var(--accent);
+          transform: translateY(-2px);
         }
-        .group:hover .project-card {
-          border-color: #333;
-          background: #111;
-        }
-        .group:hover .project-card::before {
-          opacity: 1;
-        }
+        
         .card-header {
           display: flex;
           justify-content: space-between;
           align-items: center;
+          margin-bottom: 16px;
         }
+        
         .project-number {
-          font-family: 'JetBrains Mono', 'Fira Code', monospace;
-          font-size: 11px;
-          color: #444;
-          letter-spacing: 0.1em;
-        }
-        .card-meta {
-          display: flex;
-          align-items: center;
-          gap: 10px;
-        }
-        .demo-type {
+          font-family: var(--font-mono);
           font-size: 12px;
-          color: #555;
-          transition: color 0.2s;
+          color: var(--text-dimmer);
+          font-weight: 500;
         }
-        .group:hover .demo-type {
-          color: #888;
+        
+        .level-badge {
+          font-family: var(--font-mono);
+          font-size: 10px;
+          padding: 4px 8px;
+          border-radius: 20px;
+          font-weight: 500;
+          letter-spacing: 0.02em;
+          text-transform: uppercase;
         }
-        .status-dot {
-          width: 6px;
-          height: 6px;
-          border-radius: 50%;
-          opacity: 0.8;
+        
+        .project-title {
+          font-family: var(--font-primary);
+          font-size: 18px;
+          font-weight: 500;
+          margin: 0 0 12px;
+          color: var(--text);
+          line-height: 1.3;
         }
-        .card-body {
+        
+        .project-description {
+          font-size: 14px;
+          color: var(--text-dim);
+          line-height: 1.6;
+          margin: 0 0 16px;
           flex: 1;
         }
-        .project-title {
-          font-family: 'JetBrains Mono', 'Fira Code', monospace;
-          font-size: 14px;
-          font-weight: 500;
-          color: #e5e5e5;
-          margin: 0 0 8px;
-          letter-spacing: -0.01em;
-          line-height: 1.4;
-          transition: color 0.2s;
-        }
-        .group:hover .project-title {
-          color: #fff;
-        }
-        .project-desc {
-          font-size: 13px;
-          color: #555;
-          margin: 0;
-          line-height: 1.6;
-          transition: color 0.2s;
-        }
-        .group:hover .project-desc {
-          color: #666;
-        }
-        .card-footer {
-          display: flex;
-          flex-direction: column;
-          gap: 10px;
-        }
-        .level-tag {
-          font-family: 'JetBrains Mono', 'Fira Code', monospace;
-          font-size: 10px;
-          letter-spacing: 0.08em;
-          text-transform: uppercase;
-          border: 1px solid;
-          padding: 2px 8px;
-          border-radius: 2px;
-          display: inline-block;
-          width: fit-content;
-        }
-        .tags {
+        
+        .project-tags {
           display: flex;
           flex-wrap: wrap;
-          gap: 6px;
+          gap: 8px;
+          margin-bottom: 20px;
         }
+        
         .tag {
+          font-family: var(--font-mono);
+          font-size: 10px;
+          color: var(--text-dimmer);
+          background: var(--secondary);
+          padding: 4px 8px;
+          border-radius: 4px;
+          letter-spacing: 0.02em;
+        }
+        
+        .card-footer {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-top: auto;
+          border-top: 1px solid var(--border);
+          padding-top: 16px;
+        }
+        
+        .demo-badge {
+          font-family: var(--font-mono);
           font-size: 11px;
-          color: #444;
-          background: #161616;
-          border: 1px solid #222;
-          padding: 2px 8px;
-          border-radius: 2px;
-          transition: color 0.2s, border-color 0.2s;
+          color: var(--text-dim);
+          text-transform: capitalize;
         }
-        .group:hover .tag {
-          color: #555;
-          border-color: #2a2a2a;
+        
+        .project-link {
+          font-family: var(--font-mono);
+          font-size: 12px;
+          color: var(--text-dim);
+          text-decoration: none;
+          transition: color var(--transition-fast);
+          display: inline-flex;
+          align-items: center;
         }
-        .card-arrow {
+        
+        .project-link:hover {
+          color: var(--accent);
+        }
+
+        /* Status indicator dot */
+        .project-card::before {
+          content: '';
           position: absolute;
-          bottom: 20px;
-          right: 20px;
-          font-size: 14px;
-          color: #2a2a2a;
-          transition: color 0.2s, transform 0.2s;
-        }
-        .group:hover .card-arrow {
-          color: #555;
-          transform: translateX(3px);
+          top: 24px;
+          right: 24px;
+          width: 8px;
+          height: 8px;
+          border-radius: 50%;
+          background: ${statusColors[project.status]};
+          opacity: 0.5;
         }
       `}</style>
-    </Link>
+    </div>
   )
 }

@@ -2,10 +2,14 @@
 
 import { projects, levelColors } from '@/lib/projects'
 import ProjectCard from '@/components/ProjectCard'
+import ThemeSelector from '@/components/ThemeSelector'
+import { useTheme } from '@/context/ThemeContext'
 
 export default function Home() {
+  const { theme } = useTheme()
   const live = projects.filter(p => p.status === 'live').length
   const building = projects.filter(p => p.status === 'building').length
+  const total = projects.length
 
   return (
     <main>
@@ -13,6 +17,7 @@ export default function Home() {
       <nav>
         <span className="nav-logo">Applied AI Engineering</span>
         <div className="nav-links">
+          <ThemeSelector />
           <a href="#projects">Projects</a>
           <a href="/about">About</a>
           <a
@@ -44,7 +49,7 @@ export default function Home() {
 
         <div className="hero-stats">
           <div className="stat">
-            <span className="stat-num">10</span>
+            <span className="stat-num">{total}</span>
             <span className="stat-label">Projects</span>
           </div>
           <div className="stat-divider" />
@@ -74,7 +79,7 @@ export default function Home() {
       <section className="projects-section" id="projects">
         <div className="section-header">
           <h2 className="section-title">Projects</h2>
-          <span className="section-count">{projects.length} total</span>
+          <span className="section-count">{total} total</span>
         </div>
 
         <div className="grid">
@@ -105,9 +110,10 @@ export default function Home() {
 
         main {
           min-height: 100vh;
-          background: #080808;
-          color: #e5e5e5;
-          font-family: 'DM Sans', 'Helvetica Neue', sans-serif;
+          background: var(--primary);
+          color: var(--text);
+          font-family: var(--font-primary);
+          transition: background-color var(--transition-base), color var(--transition-base);
         }
 
         /* NAV */
@@ -116,31 +122,34 @@ export default function Home() {
           justify-content: space-between;
           align-items: center;
           padding: 20px 48px;
-          border-bottom: 1px solid #141414;
+          border-bottom: 1px solid var(--border);
           position: sticky;
           top: 0;
-          background: #080808ee;
-          backdrop-filter: blur(12px);
+          background: color-mix(in srgb, var(--primary) 93%, transparent);
+          backdrop-filter: var(--blur-amount);
           z-index: 100;
+          transition: background-color var(--transition-base), border-color var(--transition-base);
         }
         .nav-logo {
-          font-family: 'JetBrains Mono', 'Fira Code', monospace;
+          font-family: var(--font-mono);
           font-size: 13px;
-          color: #555;
+          color: var(--text-dim);
           letter-spacing: 0.02em;
         }
         .nav-links {
           display: flex;
           gap: 28px;
+          align-items: center;
         }
         .nav-links a {
           font-size: 13px;
-          color: #555;
+          color: var(--text-dim);
           text-decoration: none;
-          transition: color 0.2s;
+          transition: color var(--transition-fast);
+          font-family: var(--font-primary);
         }
         .nav-links a:hover {
-          color: #e5e5e5;
+          color: var(--text);
         }
 
         /* HERO */
@@ -152,9 +161,9 @@ export default function Home() {
           display: flex;
           align-items: center;
           gap: 8px;
-          font-family: 'JetBrains Mono', 'Fira Code', monospace;
+          font-family: var(--font-mono);
           font-size: 11px;
-          color: #444;
+          color: var(--text-dim);
           letter-spacing: 0.1em;
           text-transform: uppercase;
           margin-bottom: 28px;
@@ -162,7 +171,7 @@ export default function Home() {
         .eyebrow-dot {
           width: 6px;
           height: 6px;
-          background: #4ade80;
+          background: var(--accent);
           border-radius: 50%;
           animation: pulse 2s ease-in-out infinite;
         }
@@ -171,23 +180,24 @@ export default function Home() {
           50% { opacity: 0.3; }
         }
         .hero-title {
-          font-family: 'JetBrains Mono', 'Fira Code', monospace;
           font-size: clamp(48px, 8vw, 88px);
           font-weight: 400;
           line-height: 1.0;
           letter-spacing: -0.03em;
-          color: #fff;
+          color: var(--text);
           margin: 0 0 28px;
+          transition: color var(--transition-base);
         }
         .hero-title-dim {
-          color: #2a2a2a;
+          color: var(--text-dimmer);
         }
         .hero-sub {
           font-size: 16px;
-          color: #555;
+          color: var(--text-dim);
           line-height: 1.7;
           max-width: 520px;
           margin: 0 0 48px;
+          font-family: var(--font-primary);
         }
         .hero-stats {
           display: flex;
@@ -200,22 +210,24 @@ export default function Home() {
           gap: 4px;
         }
         .stat-num {
-          font-family: 'JetBrains Mono', 'Fira Code', monospace;
+          font-family: var(--font-mono);
           font-size: 28px;
           font-weight: 400;
-          color: #fff;
+          color: var(--text);
           line-height: 1;
+          transition: color var(--transition-base);
         }
         .stat-label {
           font-size: 11px;
-          color: #444;
+          color: var(--text-dimmer);
           letter-spacing: 0.06em;
           text-transform: uppercase;
+          font-family: var(--font-mono);
         }
         .stat-divider {
           width: 1px;
           height: 36px;
-          background: #1f1f1f;
+          background: var(--border);
         }
 
         /* LEGEND */
@@ -224,7 +236,7 @@ export default function Home() {
           gap: 24px;
           flex-wrap: wrap;
           padding: 0 48px 48px;
-          border-bottom: 1px solid #111;
+          border-bottom: 1px solid var(--border);
         }
         .legend-item {
           display: flex;
@@ -237,9 +249,9 @@ export default function Home() {
           border-radius: 50%;
         }
         .legend-label {
-          font-family: 'JetBrains Mono', 'Fira Code', monospace;
+          font-family: var(--font-mono);
           font-size: 11px;
-          color: #444;
+          color: var(--text-dimmer);
           letter-spacing: 0.05em;
         }
 
@@ -254,28 +266,31 @@ export default function Home() {
           margin-bottom: 32px;
         }
         .section-title {
-          font-family: 'JetBrains Mono', 'Fira Code', monospace;
+          font-family: var(--font-mono);
           font-size: 12px;
           font-weight: 400;
-          color: #444;
+          color: var(--text-dim);
           letter-spacing: 0.1em;
           text-transform: uppercase;
           margin: 0;
         }
         .section-count {
-          font-family: 'JetBrains Mono', 'Fira Code', monospace;
+          font-family: var(--font-mono);
           font-size: 11px;
-          color: #2a2a2a;
+          color: var(--text-dimmer);
         }
         .grid {
           display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+          grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
           gap: 1px;
-          background: #111;
-          border: 1px solid #111;
+          background: var(--border);
+          border: 1px solid var(--border);
+          transition: background-color var(--transition-base), border-color var(--transition-base);
         }
         .grid-item {
           animation: fadeUp 0.4s ease both;
+          background: var(--card-bg);
+          transition: background-color var(--transition-base);
         }
         @keyframes fadeUp {
           from { opacity: 0; transform: translateY(12px); }
@@ -288,25 +303,27 @@ export default function Home() {
           justify-content: space-between;
           align-items: center;
           padding: 24px 48px;
-          border-top: 1px solid #111;
+          border-top: 1px solid var(--border);
           font-size: 12px;
-          color: #333;
+          color: var(--text-dimmer);
+          transition: border-color var(--transition-base), color var(--transition-base);
         }
         .footer-links {
           display: flex;
           gap: 24px;
         }
         .footer-links a {
-          color: #333;
+          color: var(--text-dimmer);
           text-decoration: none;
-          transition: color 0.2s;
+          transition: color var(--transition-fast);
         }
         .footer-links a:hover {
-          color: #666;
+          color: var(--text);
         }
 
         @media (max-width: 640px) {
           nav { padding: 16px 20px; }
+          .nav-links { gap: 16px; }
           .hero { padding: 64px 20px 48px; }
           .legend-bar { padding: 0 20px 32px; }
           .projects-section { padding: 48px 20px 64px; }
